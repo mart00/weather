@@ -10,7 +10,7 @@
          <?php   
          require_once './db.php';
 //         require_once '../.env';
-         echo getenv('PASSWORD_FILE_PATH');
+//         echo getenv('PASSWORD_FILE_PATH');
             // Read the database connection parameters from environment variables
             $db_host = getenv('DB_HOST');
             $db_name = getenv('DB_NAME');
@@ -25,10 +25,10 @@
             
             // Read the password from the file
             $db_pass = trim(file_get_contents($password_file_path));
-            echo "Connecting to database with:<br>";
-            echo "Host: $db_host<br>";
-            echo "Database: $db_name<br>";
-            echo "User: $db_user<br>";
+//            echo "Connecting to database with:<br>";
+//            echo "Host: $db_host<br>";
+//            echo "Database: $db_name<br>";
+//            echo "User: $db_user<br>";
             //Connect and check the connection
             $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
             if ($conn->connect_error) {
