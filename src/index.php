@@ -8,7 +8,13 @@
     <body>
         
          <?php   
-         require_once './db.php';
+//         require_once './db.php';
+         $path    = __DIR__;
+         $files = scandir($path);
+         foreach ($files as $file){
+             echo $file."<br>";
+         }
+         require_once './database.php';
 //         require_once '../.env';
 //         echo getenv('PASSWORD_FILE_PATH');
             // Read the database connection parameters from environment variables
@@ -29,11 +35,7 @@
 //            echo "Host: $db_host<br>";
 //            echo "Database: $db_name<br>";
 //            echo "User: $db_user<br>";
-            //Connect and check the connection
-            $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            } 
+            
             //make api call and save data
             $url = "http://api.openweathermap.org/data/2.5/forecast?lat=52.15&lon=4.15&units=metric&appid=9f07cc011ced1f0237895b3312734d31";
             $json    = file_get_contents( $url );
@@ -45,16 +47,16 @@
                 // get one datapoint from each day instead of every 3 hours
                 if (str_ends_with($value['dt_txt'], '12:00:00')) {
                     //check for duplicates
-                    $stmt = $conn->prepare($duplicates);
-                    if (!$stmt) {
-                        die("Prepare failed: " . $conn->error);
-                    }
-                    $stmt->bind_param("s", substr($value['dt_txt'],0,10));
-                    $stmt->execute();
-                    $stmt->store_result();
-                    $count = $stmt->num_rows;
-                    $stmt->fetch();
-                    $stmt->close();
+//                    $stmt = $conn->prepare($duplicates);
+//                    if (!$stmt) {
+//                        die("Prepare failed: " . $conn->error);
+//                    }
+//                    $stmt->bind_param("s", substr($value['dt_txt'],0,10));
+//                    $stmt->execute();
+//                    $stmt->store_result();
+//                    $count = $stmt->num_rows;
+//                    $stmt->fetch();
+//                    $stmt->close();
                     if ($count == "0") {
                         //insert the data 
                         $insert_stmt = $conn->prepare($sql);
